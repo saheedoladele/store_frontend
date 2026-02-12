@@ -116,8 +116,8 @@ export const Sidebar: React.FC = () => {
   });
 
   return (
-    <div className="pb-12 w-64 hidden lg:block border-r bg-white dark:bg-gray-900">
-      <div className="space-y-4 py-4">
+    <div className="h-screen w-64 hidden lg:block border-r bg-white dark:bg-gray-900 flex flex-col overflow-hidden">
+      <div className="flex-1 overflow-y-auto space-y-4 py-4">
         {/* Store Logo and Name */}
         <div className="px-3 py-4 border-b border-gray-200 dark:border-gray-800">
           <div className="flex items-center space-x-3">
@@ -170,6 +170,8 @@ export const Sidebar: React.FC = () => {
           </div>
         </div>
       </div>
+      {/* Bottom padding spacer to prevent last item from being cut off */}
+      <div className="h-12 flex-shrink-0"></div>
     </div>
   );
 };

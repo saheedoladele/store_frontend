@@ -29,12 +29,22 @@ const Login: React.FC = () => {
       </div>
 
       {/* Right Side - Dashboard Preview */}
-      <div className="hidden lg:flex lg:w-1/2 bg-primary items-center justify-center p-8">
-        <img 
+      <div 
+        className="hidden lg:flex lg:w-1/2 bg-primary items-center justify-center p-8 relative"
+        style={{
+          backgroundImage: 'url("/images/bg.webp")',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+        }}
+      >
+        {/* Dark overlay to maintain the dark color */}
+        <div className="absolute inset-0 bg-primary/80"></div>
+        {/* <img 
           src="/images/store_dashbord.PNG" 
           alt="Store Dashboard Preview" 
-          className="w-full h-full object-contain rounded-lg shadow-lg px-8"
-        />
+          className="w-full h-full object-contain rounded-lg shadow-lg px-8 relative z-10"
+        /> */}
       </div>
     </div>
   );

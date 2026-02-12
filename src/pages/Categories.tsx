@@ -21,7 +21,7 @@ import {
 } from '@/components/ui/alert-dialog';
 import type { Category } from '@/types/inventory';
 
-export function Categories() {
+export default function Categories() {
   const [showCategoryForm, setShowCategoryForm] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [editingCategory, setEditingCategory] = useState<Category | null>(null);

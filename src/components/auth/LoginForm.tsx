@@ -22,78 +22,44 @@ export const LoginForm: React.FC = () => {
   const { login } = useAuth();
   const { toast } = useToast();
 
-  // Debug: Track when showTwoFactorModal changes
-  useEffect(() => {
-    console.log("showTwoFactorModal changed to:", showTwoFactorModal);
-  }, [showTwoFactorModal]);
 
-  // const handleSubmit = async (e: React.FormEvent) => {
-  //   e.preventDefault();
-  //   setIsLoading(true);
-
-  //   try {
-  //     // Initial login
-  //     const result = await login(email, password);
-  //     if (result  && result.requiresTwoFactor) {
-  //       setShowTwoFactorModal(true);
-  //       setTempToken(result.tempToken || null);
-  //       setIsLoading(false)
-        
-  //       toast({
-  //         title: "Two-Factor Authentication Required",
-  //         description: "Please enter the code from your authenticator app.",
-  //         variant: "warning",
-  //       });
-  //     } else {
-  //       toast({
-  //         title: "Welcome back!",
-  //         description: "You've been successfully logged in.",
-  //         variant: "success",
-  //       });
-  //     }
-  //   } catch (error) {
-  //     toast({
-  //       title: "Login failed",
-  //       description: error instanceof Error ? error.message : "Please check your credentials and try again.",
-  //       variant: "destructive",
-  //     });
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
-  // };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-  
+
     try {
+      // Initial login
       const result = await login(email, password);
-  
-      if (result && typeof result === 'object' && result.requiresTwoFactor) {
-        setTempToken(result.tempToken || null);
+      if (result  && result.requiresTwoFactor) {
         setShowTwoFactorModal(true);
-        setIsLoading(false);
-        return;
+        setTempToken(result.tempToken || null);
+        setIsLoading(false)
+        
+        toast({
+          title: "Two-Factor Authentication Required",
+          description: "Please enter the code from your authenticator app.",
+          variant: "warning",
+        });
+      } else {
+        toast({
+          title: "Welcome back!",
+          description: "You've been successfully logged in.",
+          variant: "success",
+        });
       }
-  
-      toast({
-        title: "Welcome back!",
-        description: "You've been successfully logged in.",
-        variant: "success",
-      });
     } catch (error) {
       toast({
         title: "Login failed",
-        description:
-          error instanceof Error
-            ? error.message
-            : "Please check your credentials and try again.",
+        description: error instanceof Error ? error.message : "Please check your credentials and try again.",
         variant: "destructive",
       });
     } finally {
       setIsLoading(false);
     }
   };
+
+ 
 
   
   const handleTwoFactorVerify = async (code: string) => {
@@ -147,7 +113,9 @@ export const LoginForm: React.FC = () => {
       variant: "warning",
     });
   };
+
   return (
+    <>
     <div className="flex flex-col h-full">
       {/* Logo */}
       <div className="mb-8">
@@ -170,7 +138,7 @@ export const LoginForm: React.FC = () => {
       </div>
 
       {/* Form */}
-      <form onSubmit={handleSubmit} className="space-y-5 flex-1">
+      <form onSubmit={handleSubmit}  className="space-y-5 flex-1">
         <div className="space-y-2">
           <Label htmlFor="email">Email</Label>
           <Input
@@ -313,14 +281,14 @@ export const LoginForm: React.FC = () => {
           </Link>
         </div>
       </form>
-
-      {/* Two-Factor Authentication Modal */}
-      <TwoFactorModal
-        open={showTwoFactorModal}
-        onClose={handleTwoFactorModalClose}
-        onVerify={handleTwoFactorVerify}
-        isLoading={isVerifyingTwoFactor}
-      />
     </div>
+    {/* Two-Factor Authentication Modal */}
+    <TwoFactorModal
+      open={showTwoFactorModal}
+      onClose={handleTwoFactorModalClose}
+      onVerify={handleTwoFactorVerify}
+      isLoading={isVerifyingTwoFactor}
+    />
+    </>
   );
 };

@@ -1,5 +1,6 @@
 export interface Customer {
     id: string;
+    tenant_id: string;
     name: string;
     email?: string;
     phone?: string;
